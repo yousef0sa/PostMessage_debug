@@ -32,7 +32,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cb_Window_Handle = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -67,7 +67,7 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.label3);
-            this.groupBox3.Controls.Add(this.comboBox1);
+            this.groupBox3.Controls.Add(this.cb_Window_Handle);
             this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.label1);
             this.groupBox3.Controls.Add(this.textBox1);
@@ -88,13 +88,18 @@
             this.label3.TabIndex = 15;
             this.label3.Text = "Window Handle";
             // 
-            // comboBox1
+            // cb_Window_Handle
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(9, 33);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(313, 21);
-            this.comboBox1.TabIndex = 14;
+            this.cb_Window_Handle.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cb_Window_Handle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_Window_Handle.FormattingEnabled = true;
+            this.cb_Window_Handle.Location = new System.Drawing.Point(9, 33);
+            this.cb_Window_Handle.Name = "cb_Window_Handle";
+            this.cb_Window_Handle.Size = new System.Drawing.Size(313, 21);
+            this.cb_Window_Handle.TabIndex = 14;
+            this.cb_Window_Handle.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cb_Window_Handle_DrawItem);
+            this.cb_Window_Handle.DropDown += new System.EventHandler(this.cb_Window_Handle_DropDown);
+            this.cb_Window_Handle.SelectedIndexChanged += new System.EventHandler(this.cb_Window_Handle_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -162,7 +167,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cb_Window_Handle;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
