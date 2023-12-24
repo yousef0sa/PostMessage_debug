@@ -20,14 +20,18 @@ namespace PostMessage_debug.Windows
         private IntPtr windowHandle;
         private Timer captureTimer;
         private PictureBox displayControl;
+        private Form1 parentForm;
 
-        public WindowVideoCapture(IntPtr WindowHandle, PictureBox pictureBox)
+
+
+        public WindowVideoCapture(IntPtr WindowHandle, PictureBox pictureBox, Form1 form1)
         {
             this.windowHandle = WindowHandle;
             this.displayControl = pictureBox;
             this.captureTimer = new Timer();
             this.captureTimer.Interval = 100; // Capture interval in milliseconds
             this.captureTimer.Tick += CaptureTimer_Tick;
+            this.parentForm = form1;
         }
 
         private void CaptureTimer_Tick(object sender, EventArgs e)
@@ -45,6 +49,10 @@ namespace PostMessage_debug.Windows
             GetWindowRect(windowHandle, out Rectangle windowRect);
             int width = windowRect.Width - windowRect.X;
             int height = windowRect.Height - windowRect.Y;
+
+            // Update original window size in parent form
+            parentForm.originalWindowWidth = width;
+            parentForm.originalWindowHeight = height;
 
             Bitmap bmp = new Bitmap(width, height);
 

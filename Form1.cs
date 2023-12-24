@@ -1,7 +1,9 @@
-﻿using PostMessage_debug.Windows;
+﻿using PostMessage_debug.Mouse;
+using PostMessage_debug.Windows;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace PostMessage_debug
@@ -10,6 +12,9 @@ namespace PostMessage_debug
     {
         private IntPtr selectedWindowHandle;
         private WindowVideoCapture videoCapture;
+        private MouseMovement mouseMovement;
+        public int originalWindowWidth;
+        public int originalWindowHeight;
 
 
 
@@ -95,10 +100,22 @@ namespace PostMessage_debug
                 selectedWindowHandle = selectedWindow.Handle;
 
                 // Create a new video capture instance
-                videoCapture = new WindowVideoCapture(selectedWindowHandle, pictureBox1);
+                videoCapture = new WindowVideoCapture(selectedWindowHandle, pictureBox1, this);
                 videoCapture.StartCapture();
             }
 
+        }
+
+        /// <summary>
+        /// Event handler for the MouseMove event of the pictureBox1 control.
+        /// </summary>
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if(cb_Send_Mouse.Checked)
+            {
+                mouseMovement = new MouseMovement(selectedWindowHandle, originalWindowWidth, originalWindowHeight, pictureBox1);
+                mouseMovement.OnMouseMove(sender, e);
+            }
         }
     }
 }
