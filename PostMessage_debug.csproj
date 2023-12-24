@@ -94,7 +94,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Window Handle\WindowHelper.cs" />
+    <Compile Include="Windows\WindowHelper.cs" />
+    <Compile Include="Windows\WindowVideoCapture.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

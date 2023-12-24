@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PostMessage_debug.Windows;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -8,12 +9,14 @@ namespace PostMessage_debug
     public partial class Form1 : Form
     {
         private IntPtr selectedWindowHandle;
+        private WindowVideoCapture videoCapture;
+
+
 
         public Form1()
         {
             InitializeComponent();
         }
-
 
         /// <summary>
         /// Event handler for the DropDown event of cb_Window_Handle.
@@ -77,9 +80,25 @@ namespace PostMessage_debug
         {
             if (cb_Window_Handle.SelectedIndex != -1)
             {
+                // Stop and dispose the previous video capture if it exists
+                if (videoCapture != null)
+                {
+                    videoCapture.StopCapture();
+                    if (pictureBox1.Image != null)
+                    {
+                        pictureBox1.Image.Dispose();
+                        pictureBox1.Image = null;
+                    }
+                }
+
                 WindowInfo selectedWindow = (WindowInfo)cb_Window_Handle.SelectedItem;
                 selectedWindowHandle = selectedWindow.Handle;
+
+                // Create a new video capture instance
+                videoCapture = new WindowVideoCapture(selectedWindowHandle, pictureBox1);
+                videoCapture.StartCapture();
             }
+
         }
     }
 }
