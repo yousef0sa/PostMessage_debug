@@ -29,7 +29,7 @@ namespace PostMessage_debug.Windows
             this.windowHandle = WindowHandle;
             this.displayControl = pictureBox;
             this.captureTimer = new Timer();
-            this.captureTimer.Interval = 100; // Capture interval in milliseconds
+            this.captureTimer.Interval = 50; // Capture interval in milliseconds
             this.captureTimer.Tick += CaptureTimer_Tick;
             this.parentForm = form1;
         }

@@ -3,7 +3,6 @@ using PostMessage_debug.Windows;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace PostMessage_debug
@@ -15,6 +14,7 @@ namespace PostMessage_debug
         private MouseMovement mouseMovement;
         public int originalWindowWidth;
         public int originalWindowHeight;
+        private IntPtr mouseMoveLParam;
 
 
 
@@ -111,10 +111,51 @@ namespace PostMessage_debug
         /// </summary>
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            if(cb_Send_Mouse.Checked)
+            if (cb_Send_Mouse.Checked)
             {
                 mouseMovement = new MouseMovement(selectedWindowHandle, originalWindowWidth, originalWindowHeight, pictureBox1);
-                mouseMovement.OnMouseMove(sender, e);
+                mouseMoveLParam = mouseMovement.OnMouseMove(sender, e);
+            }
+        }
+
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            // Create an instance of the MouseClickSender
+            var mouseClickSender = new MouseClickSender(selectedWindowHandle, mouseMoveLParam);
+            if (cb_Send_Mouse.Checked)
+            {
+                // Check which mouse button was pressed
+                if (e.Button == MouseButtons.Left)
+                {
+                    // Send left click down
+                    mouseClickSender.SendLeftClickDown();
+                }
+                else if (e.Button == MouseButtons.Right)
+                {
+                    // Send right click down
+                    mouseClickSender.SendRightClickDown();
+                }
+            }
+        }
+
+        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (cb_Send_Mouse.Checked)
+            {
+                // Create an instance of the MouseClickSender
+                var mouseClickSender = new MouseClickSender(selectedWindowHandle, mouseMoveLParam);
+
+                // Check which mouse button was pressed
+                if (e.Button == MouseButtons.Left)
+                {
+                    // Send left click Up
+                    mouseClickSender.SendLeftClickUp();
+                }
+                else if (e.Button == MouseButtons.Right)
+                {
+                    // Send right click Up
+                    mouseClickSender.SendRightClickUp();
+                }
             }
         }
     }

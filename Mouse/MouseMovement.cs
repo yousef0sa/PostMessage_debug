@@ -31,10 +31,10 @@ namespace PostMessage_debug.Mouse
         /// </summary>
         /// <param name="sender">The object that triggered the event.</param>
         /// <param name="e">The MouseEventArgs containing information about the mouse move event.</param>
-        public void OnMouseMove(object sender, MouseEventArgs e)
+        public IntPtr OnMouseMove(object sender, MouseEventArgs e)
         {
             if (selectedWindowHandle == IntPtr.Zero || originalWindowWidth == 0 || originalWindowHeight == 0)
-                return;
+                return IntPtr.Zero;
 
             // Calculate scale factors
             float scaleX = (float)originalWindowWidth / pictureBox1.Width;
@@ -49,6 +49,7 @@ namespace PostMessage_debug.Mouse
 
             // Send the WM_MOUSEMOVE message to the window
             PostMessage(selectedWindowHandle, WM_MOUSEMOVE, IntPtr.Zero, lParam);
+            return lParam;
         }
 
     }
